@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Provider Registration</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Register as a Provider</h1>
+
+    <form th:action="@{/provider/register}" th:object="${provider}" method="post">
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required><br>
+
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" required><br>
+
+        <label>Password:</label>
+        <input type="password" th:field="*{password}" required><br>
+
+        <label>Phone:</label>
+        <input type="text" th:field="*{phone}" required><br>
+
+        <label>License Number:</label>
+        <input type="text" th:field="*{licenseNumber}" required><br>
+
+        <label>Car Model:</label>
+        <input type="text" th:field="*{carModel}" required><br>
+
+        <label>Total Seats:</label>
+        <input type="number" th:field="*{seatsTotal}" required><br>
+
+        <label>Area:</label>
+        <input type="text" th:field="*{area}" required><br>
+
+        <label>College:</label>
+        <select th:field="*{college.id}">
+            <option value="">-- Select College --</option>
+            <option th:each="college : ${colleges}"
+                    th:value="${college.id}"
+                    th:text="${college.name}">
+            </option>
+        </select>
+        <br>
+
+        <button type="submit" class="btn">Register</button>
+    </form>
+</div>
+</body>
+</html>
