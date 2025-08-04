@@ -19,4 +19,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("SELECT b FROM Booking b WHERE b.user IS NULL AND b.status = 'available' AND b.provider.college.id = :collegeId")
     List<Booking> findAvailableBookingsByCollegeId(@Param("collegeId") Long collegeId);
 
+    List<Booking> findByUserIdAndProviderIdAndRideDateAndRideType(Long userId, Long providerId, LocalDate rideDate, String rideType);
+
+    int countByProviderIdAndRideDateAndRideTypeAndStatus(Long providerId, LocalDate rideDate, String rideType, String status);
+
+
 }

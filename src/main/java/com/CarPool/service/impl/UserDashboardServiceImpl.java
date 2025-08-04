@@ -63,6 +63,24 @@ public class UserDashboardServiceImpl implements UserDashboardService {
             }
         }
 
+        // 🔒 Prevent duplicate bookings
+        List<Booking> existing = bookingRepository.findByUserIdAndProviderIdAndRideDateAndRideType(
+                user.getId(), providerId, rideDate, rideType
+        );
+        if (!existing.isEmpty()) {
+            return "You have already booked this ride.";
+        }
+
+        // 🚫 Check seat availability
+        int bookedCount = bookingRepository.countByProviderIdAndRideDateAndRideTypeAndStatus(
+                providerId, rideDate, rideType, "booked"
+        );
+        int totalSeats = providerRepository.findById(providerId).orElseThrow().getSeatsTotal();
+        if (bookedCount >= totalSeats) {
+            return "No seats available for this ride.";
+        }
+
+        // ✅ Book the ride
         Booking booking = new Booking();
         booking.setUser(user);
         booking.setProvider(providerRepository.findById(providerId).orElse(null));
@@ -73,6 +91,8 @@ public class UserDashboardServiceImpl implements UserDashboardService {
         bookingRepository.save(booking);
         return "Ride booked successfully.";
     }
+
+
 
 
     @Override
