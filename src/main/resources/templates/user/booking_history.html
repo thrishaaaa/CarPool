@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Booking History</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
 </head>
 <body>
 <h2>Your Bookings</h2>
@@ -17,14 +18,14 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="booking : ${bookings}">
-        <td th:text="${booking.provider.name}"></td>
+    <tr th:each="booking : ${history}">
+        <td th:text="${booking.provider != null ? booking.provider.name : 'N/A'}"></td>
         <td th:text="${booking.rideDate}"></td>
         <td th:text="${booking.rideType}"></td>
         <td th:text="${booking.status}"></td>
         <td>
-            <form th:if="${booking.status == 'booked'}" th:action="@{/user/cancel-booking}" method="post">
-                <input type="hidden" name="bookingId" th:value="${booking.id}" />
+            <form th:if="${booking.status == 'booked'}"
+                  th:action="@{'/user/dashboard/cancel/' + ${booking.id}}" method="post">
                 <button type="submit">Cancel</button>
             </form>
         </td>

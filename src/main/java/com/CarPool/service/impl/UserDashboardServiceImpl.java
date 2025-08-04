@@ -54,7 +54,6 @@ public class UserDashboardServiceImpl implements UserDashboardService {
             try {
                 int deadlineHour = Integer.parseInt(settings.getBookingDeadline());
                 LocalDateTime bookingDeadline = LocalDateTime.of(rideDate.minusDays(1), LocalTime.of(deadlineHour, 0));
-
                 if (LocalDateTime.now().isAfter(bookingDeadline)) {
                     return "Booking deadline has passed.";
                 }
@@ -63,24 +62,15 @@ public class UserDashboardServiceImpl implements UserDashboardService {
             }
         }
 
-        // 🔒 Prevent duplicate bookings
-        List<Booking> existing = bookingRepository.findByUserIdAndProviderIdAndRideDateAndRideType(
-                user.getId(), providerId, rideDate, rideType
-        );
-        if (!existing.isEmpty()) {
-            return "You have already booked this ride.";
+        // 🔥 Check only for EXISTING "booked" status
+        List<Booking> existingBookings = bookingRepository
+                .findByUserIdAndProviderIdAndRideDateAndRideTypeAndStatus(
+                        user.getId(), providerId, rideDate, rideType, "booked");
+
+        if (!existingBookings.isEmpty()) {
+            return "You already have booked this ride.";
         }
 
-        // 🚫 Check seat availability
-        int bookedCount = bookingRepository.countByProviderIdAndRideDateAndRideTypeAndStatus(
-                providerId, rideDate, rideType, "booked"
-        );
-        int totalSeats = providerRepository.findById(providerId).orElseThrow().getSeatsTotal();
-        if (bookedCount >= totalSeats) {
-            return "No seats available for this ride.";
-        }
-
-        // ✅ Book the ride
         Booking booking = new Booking();
         booking.setUser(user);
         booking.setProvider(providerRepository.findById(providerId).orElse(null));
@@ -95,18 +85,19 @@ public class UserDashboardServiceImpl implements UserDashboardService {
 
 
 
+
     @Override
     public String cancelBooking(Long bookingId) {
         Booking booking = bookingRepository.findById(bookingId).orElse(null);
-        if (booking == null) return "Invalid booking.";
+        if (booking == null || !"booked".equals(booking.getStatus())) {
+            return "Invalid or already cancelled booking.";
+        }
 
         Settings settings = settingsRepository.findById(1L).orElse(null);
-
         if (settings != null) {
             try {
                 int deadlineHour = Integer.parseInt(settings.getBookingDeadline());
                 LocalDateTime cancelDeadline = LocalDateTime.of(booking.getRideDate().minusDays(1), LocalTime.of(deadlineHour, 0));
-
                 if (LocalDateTime.now().isAfter(cancelDeadline)) {
                     return "Cannot cancel, deadline has passed.";
                 }
@@ -115,10 +106,19 @@ public class UserDashboardServiceImpl implements UserDashboardService {
             }
         }
 
+        // Cancel the booking
         booking.setStatus("cancelled");
-        bookingRepository.save(booking);
-        return "Booking cancelled.";
+
+        // Increase the provider's seatsTotal count
+        Provider provider = booking.getProvider();
+        provider.setSeatsTotal(provider.getSeatsTotal() + 1);
+
+        providerRepository.save(provider);  // Update the provider
+        bookingRepository.save(booking);    // Save updated booking
+
+        return "Booking cancelled successfully.";
     }
+
 
     @Override
     public List<Booking> getBookingHistory(Long userId) {

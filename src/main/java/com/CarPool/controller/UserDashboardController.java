@@ -72,11 +72,15 @@ public class UserDashboardController {
 
 
     @PostMapping("/cancel/{bookingId}")
-    public String cancelBooking(@PathVariable Long bookingId, Model model) {
+    public String cancelBooking(@PathVariable Long bookingId, HttpSession session, Model model) {
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) return "redirect:/user/login";
+
         String result = userDashboardService.cancelBooking(bookingId);
         model.addAttribute("message", result);
         return "redirect:/user/dashboard/history";
     }
+
 
     @GetMapping("/history")
     public String viewBookingHistory(HttpSession session, Model model) {
