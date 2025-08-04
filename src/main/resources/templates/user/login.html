@@ -8,15 +8,21 @@
 <body>
 <div class="container">
   <h2>User Login</h2>
-  <form th:action="@{/user/login}" method="post">
-    <label>User ID:</label>
-    <input type="text" name="id" required><br>
+
+  <div th:if="${error}" style="color:red;">
+    <p th:text="${error}"></p>
+  </div>
+
+  <form th:action="@{/user/login}" method="post" th:object="${user}">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" required />
 
     <label>Password:</label>
-    <input type="password" name="password" required><br>
+    <input type="password" th:field="*{password}" required />
 
     <button type="submit">Login</button>
   </form>
+
   <a href="/">Back to Home</a>
 </div>
 </body>

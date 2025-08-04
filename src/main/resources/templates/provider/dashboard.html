@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Provider Dashboard</title>
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+<div class="sidebar">
+  <h2>Welcome, <span th:text="${provider.name}">Provider</span></h2>
+  <ul>
+    <li><a th:href="@{/provider/dashboard/view-bookings}">View Bookings</a></li>
+    <li><a th:href="@{/provider/dashboard/add-ride}">Add Ride</a></li>
+    <li><a th:href="@{/provider/dashboard/cancel-ride}">Cancel Ride</a></li>
+    <li><a th:href="@{/logout}">Logout</a></li>
+  </ul>
+</div>
+<div class="main-content">
+  <h1>Dashboard</h1>
+  <p>Select an option from the sidebar.</p>
+</div>
+</body>
+</html>

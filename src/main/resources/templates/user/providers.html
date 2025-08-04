@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Available Providers</title>
+</head>
+<body>
+<h2>Available Rides</h2>
+
+<form th:action="@{/user/providers/search}" method="get">
+    <input type="text" name="area" placeholder="Search by Area" />
+    <input type="text" name="carModel" placeholder="Search by Car Model" />
+    <button type="submit">Search</button>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Car Model</th>
+        <th>Area</th>
+        <th>Seats</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="provider : ${providers}">
+        <td th:text="${provider.name}"></td>
+        <td th:text="${provider.carModel}"></td>
+        <td th:text="${provider.area}"></td>
+        <td th:text="${provider.seatsTotal}"></td>
+        <td>
+            <form th:action="@{/user/book}" method="post">
+                <input type="hidden" name="providerId" th:value="${provider.id}" />
+                <label>Ride Date: <input type="date" name="rideDate" required></label>
+                <select name="rideType">
+                    <option value="pickup">Pickup</option>
+                    <option value="drop">Drop</option>
+                </select>
+                <button type="submit">Book</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/user/dashboard}">Back to Dashboard</a>
+</body>
+</html>

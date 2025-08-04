@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+<div class="sidebar">
+    <h2>Welcome, <span th:text="${user.name}">User</span></h2>
+    <ul>
+        <li><a th:href="@{/user/dashboard}">Find Rides</a></li>
+        <li><a th:href="@{/user/dashboard/history}">Booking History</a></li>
+        <li><a th:href="@{/user/dashboard/notifications}">Notifications</a></li>
+        <li><a th:href="@{/logout}">Logout</a></li>
+    </ul>
+</div>
+
+<div class="main-content">
+    <h1>Available Rides</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Provider Name</th>
+            <th>Car Model</th>
+            <th>Ride Type</th>
+            <th>Ride Date</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ride : ${availableRides}" th:if="${ride.provider != null}">
+            <td th:text="${ride.provider.name}">Provider</td>
+            <td th:text="${ride.provider.carModel}">Car</td>
+            <td th:text="${ride.rideType}">Type</td>
+            <td th:text="${ride.rideDate}">Date</td>
+            <td>
+                <form th:action="@{'/user/dashboard/book/' + ${ride.provider.id}}" method="post">
+                    <input type="hidden" name="rideDate" th:value="${ride.rideDate}" />
+                    <input type="hidden" name="rideType" th:value="${ride.rideType}" />
+
+                    <!-- CSRF token (only needed if using Spring Security) -->
+                    <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                    <button type="submit">Book</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${message}" th:text="${message}" style="color:green;"></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>View Bookings</title>
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+<div class="container">
+  <h2>Your Bookings</h2>
+  <table border="1">
+    <tr>
+      <th>User Name</th>
+      <th>Ride Date</th>
+      <th>Ride Type</th>
+      <th>Status</th>
+    </tr>
+    <tr th:each="booking : ${bookings}">
+      <td th:text="${booking.user != null ? booking.user.name : 'Available'}"></td>
+      <td th:text="${booking.rideDate}"></td>
+      <td th:text="${booking.rideType}"></td>
+      <td th:text="${booking.status}"></td>
+    </tr>
+
+  </table>
+  <br>
+  <a th:href="@{/provider/dashboard}">Back to Dashboard</a>
+</div>
+</body>
+</html>

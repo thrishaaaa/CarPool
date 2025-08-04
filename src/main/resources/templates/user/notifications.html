@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Notifications</title>
+</head>
+<body>
+<h2>Notifications</h2>
+
+<ul>
+    <li th:each="note : ${notifications}" th:text="${note}"></li>
+</ul>
+
+<a th:href="@{/user/dashboard}">Back to Dashboard</a>
+</body>
+</html>

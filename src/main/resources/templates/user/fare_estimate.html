@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fare Estimation</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+</head>
+<body>
+<div class="sidebar">
+    <h2>CarPool User</h2>
+    <ul>
+        <li><a th:href="@{/user/dashboard}">Dashboard</a></li>
+        <li><a th:href="@{/user/available-cars}">Available Cars</a></li>
+        <li><a th:href="@{/user/booking-history}">Booking History</a></li>
+        <li><a th:href="@{/user/notifications}">Notifications</a></li>
+        <li><a class="active" th:href="@{/user/fare-estimate}">Fare Estimation</a></li>
+    </ul>
+</div>
+
+<div class="main-content">
+    <h1>Fare Estimation</h1>
+
+    <form th:action="@{/user/fare-estimate}" method="get">
+        <label for="providerId">Provider ID:</label>
+        <input type="number" id="providerId" name="providerId" required />
+        <button type="submit">Estimate</button>
+    </form>
+
+    <div th:if="${fare != null}">
+        <p><strong>Estimated Fare:</strong> ₹<span th:text="${fare}"></span></p>
+    </div>
+
+    <div th:if="${error != null}" class="notification">
+        <p th:text="${error}"></p>
+    </div>
+
+    <a th:href="@{/user/dashboard}">← Back to Dashboard</a>
+</div>
+</body>
+</html>

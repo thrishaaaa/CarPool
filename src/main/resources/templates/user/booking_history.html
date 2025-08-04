@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Booking History</title>
+</head>
+<body>
+<h2>Your Bookings</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Provider</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="booking : ${bookings}">
+        <td th:text="${booking.provider.name}"></td>
+        <td th:text="${booking.rideDate}"></td>
+        <td th:text="${booking.rideType}"></td>
+        <td th:text="${booking.status}"></td>
+        <td>
+            <form th:if="${booking.status == 'booked'}" th:action="@{/user/cancel-booking}" method="post">
+                <input type="hidden" name="bookingId" th:value="${booking.id}" />
+                <button type="submit">Cancel</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/user/dashboard}">Back to Dashboard</a>
+</body>
+</html>

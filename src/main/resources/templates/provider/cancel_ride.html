@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Cancel Ride</title>
+  <link rel="stylesheet" th:href="@{/css/provider_dashboard.css}">
+
+</head>
+<body>
+<h2>Cancel a Ride</h2>
+<form th:action="@{/provider/dashboard/cancel-ride}" method="post">
+  <label>Select Date:</label>
+  <input type="date" name="rideDate" required><br>
+
+  <label>Ride Type:</label>
+  <select name="rideType">
+    <option value="pickup">Pickup</option>
+    <option value="drop">Drop</option>
+  </select><br>
+
+  <button type="submit">Cancel Ride</button>
+</form>
+<a th:href="@{/provider/dashboard}">Back to Dashboard</a>
+</body>
+</html>
