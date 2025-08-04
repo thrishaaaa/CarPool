@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class UserDashboardController {
         User user = userDashboardService.getUserById(userId);
         String result = userDashboardService.bookRide(user, providerId, rideType, LocalDate.parse(rideDate));
 
-        redirectAttributes.addFlashAttribute("message", result); // ✅ Pass message on redirect
+        redirectAttributes.addFlashAttribute("message", result);
 
         return "redirect:/user/dashboard";
     }

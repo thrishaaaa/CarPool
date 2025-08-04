@@ -31,12 +31,9 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     public List<Provider> searchProviders(String area, String carModel, Long collegeId) {
-        // Provide default empty strings to avoid null pointer issues
         if (area == null) area = "";
         if (carModel == null) carModel = "";
-        return providerRepository.findByCollegeIdAndAreaContainingIgnoreCaseAndCarModelContainingIgnoreCase(
-                collegeId, area, carModel
-        );
+        return providerRepository.findByCollegeIdAndAreaContainingIgnoreCaseAndCarModelContainingIgnoreCase(collegeId, area, carModel);
     }
 
 

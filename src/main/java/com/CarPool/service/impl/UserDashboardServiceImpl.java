@@ -1,4 +1,3 @@
-// UserDashboardServiceImpl.java
 package com.CarPool.service.impl;
 
 import com.CarPool.model.Booking;
@@ -41,9 +40,7 @@ public class UserDashboardServiceImpl implements UserDashboardService {
 
     @Override
     public List<Provider> searchProviders(String area, String carModel, Long collegeId) {
-        return providerRepository.findByCollegeIdAndAreaContainingIgnoreCaseAndCarModelContainingIgnoreCase(
-                collegeId, area, carModel
-        );
+        return providerRepository.findByCollegeIdAndAreaContainingIgnoreCaseAndCarModelContainingIgnoreCase(collegeId, area, carModel);
     }
 
     @Override
@@ -62,7 +59,6 @@ public class UserDashboardServiceImpl implements UserDashboardService {
             }
         }
 
-        // 🔥 Check only for EXISTING "booked" status
         List<Booking> existingBookings = bookingRepository
                 .findByUserIdAndProviderIdAndRideDateAndRideTypeAndStatus(
                         user.getId(), providerId, rideDate, rideType, "booked");

@@ -21,14 +21,12 @@ public class User implements Serializable {
     @JoinColumn(name = "college_id")
     private College college;
 
-    // Setters
     public void setId(Long id) { this.id = id; }
     public void setName(String name) { this.name = name; }
     public void setPassword(String password) { this.password = password; }
     public void setPickupPoint(String pickupPoint) { this.pickupPoint = pickupPoint; }
     public void setCollege(College college) { this.college = college; }
 
-    // Getters
     public Long getId() { return id; }
     public String getName() { return name; }
     public String getPassword() { return password; }

@@ -15,7 +15,6 @@ public class College implements Serializable {
 
     private String name;
 
-    // Getters and setters
     public Long getId() {
         return id;
     }

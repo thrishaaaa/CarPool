@@ -8,6 +8,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String showHomePage() {
-        return "index"; // This should return the name of the view to be rendered
+        return "index";
     }
 }

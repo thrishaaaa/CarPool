@@ -11,7 +11,7 @@ public class Settings {
     private Long id;
 
     private double fuelCostPerKm;
-    private String bookingDeadline; // can store "21:00" for 9PM or convert to time
+    private String bookingDeadline;
 
     public Long getId() {
         return id;
@@ -36,5 +36,4 @@ public class Settings {
     public void setBookingDeadline(String bookingDeadline) {
         this.bookingDeadline = bookingDeadline;
     }
-    // Getters & Setters
 }

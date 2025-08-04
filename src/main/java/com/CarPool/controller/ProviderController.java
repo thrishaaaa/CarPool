@@ -19,13 +19,12 @@ public class ProviderController {
     @Autowired
     private CollegeRepository collegeRepository;
 
-    // --- Registration ---
 
     @GetMapping("/register")
     public String showProviderRegistrationForm(Model model) {
         model.addAttribute("provider", new Provider());
         model.addAttribute("colleges", collegeRepository.findAll());
-        return "provider/register"; // templates/provider/register.html
+        return "provider/register";
     }
 
     @PostMapping("/register")
@@ -34,7 +33,6 @@ public class ProviderController {
         return "redirect:/provider/login";
     }
 
-    // --- Login ---
 
     @GetMapping("/login")
     public String showProviderLoginForm(Model model) {
@@ -56,8 +54,6 @@ public class ProviderController {
             return "provider/login";
         }
     }
-
-    // --- Logout ---
 
     @GetMapping("/logout")
     public String logoutProvider(HttpSession session) {

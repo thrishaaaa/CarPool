@@ -20,8 +20,8 @@ public class Booking {
     private Provider provider;
 
     private LocalDate rideDate;
-    private String rideType;  // "pickup" or "drop"
-    private String status;    // "booked" or "cancelled"
+    private String rideType;
+    private String status;
 
     public Long getId() {
         return id;
@@ -70,5 +70,4 @@ public class Booking {
     public void setStatus(String status) {
         this.status = status;
     }
-    // Getters & Setters
 }

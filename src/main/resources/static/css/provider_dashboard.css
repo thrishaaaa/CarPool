@@ -6,7 +6,6 @@ body {
   box-sizing: border-box;
   overflow-x: hidden;
 }
-
 .container {
   max-width: 90%;
   width: 600px;
@@ -107,8 +106,6 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
-/* Mobile responsiveness */
 @media (max-width: 480px) {
   .container {
     padding: 20px 15px;

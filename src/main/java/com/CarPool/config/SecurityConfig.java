@@ -17,9 +17,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().permitAll()
                 )
-                .httpBasic(Customizer.withDefaults())  // optional: enables basic auth if you ever need it
-                .securityMatcher("/**")  // apply config to all routes
-                .csrf(csrf -> csrf.disable());  // disables CSRF properly
+                .httpBasic(Customizer.withDefaults())
+                .securityMatcher("/**")
+                .csrf(csrf -> csrf.disable());
 
         return http.build();
     }

@@ -29,10 +29,10 @@ public class ProviderDashboardServiceImpl implements ProviderDashboardService {
     public String addRide(Provider provider, String rideType, LocalDate rideDate) {
         Booking booking = new Booking();
         booking.setProvider(provider);
-        booking.setUser(null); // No user yet
+        booking.setUser(null);
         booking.setRideType(rideType);
         booking.setRideDate(rideDate);
-        booking.setStatus("available"); // Mark as available
+        booking.setStatus("available");
 
         bookingRepository.save(booking);
 

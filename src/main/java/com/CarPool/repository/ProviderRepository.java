@@ -8,8 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ProviderRepository extends JpaRepository<Provider, Long> {
-    Provider findByEmail(String email); // useful for login
-
+    Provider findByEmail(String email);
     List<Provider> findByCollegeId(Long collegeId);
 
     List<Provider> findByCollegeIdAndAreaContainingIgnoreCaseAndCarModelContainingIgnoreCase(
